@@ -1,0 +1,74 @@
+import React, { useState, useEffect } from "react";
+import { ethers } from "ethers";
+
+const App = () => {
+  const [account, setAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
+  const [paymentHubContract, setPaymentHubContract] = useState(null);
+  const [balance, setBalance] = useState(0);
+
+  const contractAddress = "VOTRE_ADRESSE_CONTRAT";  // Remplacez par l'adresse de votre contrat déployé
+
+  useEffect(() => {
+    if (account && provider) {
+      const contractABI = [
+        "function getBalance() public view returns (uint256)",
+        "function sendPayment(address payable to, uint256 amount) public",
+      ];
+
+      const contract = new ethers.Contract(contractAddress, contractABI, provider);
+      setPaymentHubContract(contract);
+    }
+  }, [account, provider]);
+
+  // Fonction pour connecter le portefeuille
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = web3Provider.getSigner();
+      const userAccount = await signer.getAddress();
+      setAccount(userAccount);
+      setProvider(web3Provider);
+    } else {
+      alert("Please install MetaMask or another wallet.");
+    }
+  };
+
+  // Fonction pour récupérer le solde du contrat
+  const getBalance = async () => {
+    if (paymentHubContract) {
+      const contractBalance = await paymentHubContract.getBalance();
+      setBalance(ethers.utils.formatEther(contractBalance));
+    }
+  };
+
+  // Fonction pour envoyer des paiements
+  const sendPayment = async (amount) => {
+    if (paymentHubContract) {
+      const tx = await paymentHubContract.sendPayment(
+        "ADDRESS_DESTINATAIRE",  // L'adresse de destination pour le paiement
+        ethers.utils.parseEther(amount)
+      );
+      await tx.wait();
+      alert("Payment sent!");
+    }
+  };
+
+  return (
+    <div className="App">
+      <h1>Payment DApp</h1>
+      {!account ? (
+        <button onClick={connectWallet}>Connect Wallet</button>
+      ) : (
+        <div>
+          <p>Connected Account: {account}</p>
+          <button onClick={getBalance}>Get Contract Balance</button>
+          <p>Contract Balance: {balance} ETH</p>
+          <button onClick={() => sendPayment("0.1")}>Send 0.1 ETH</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
