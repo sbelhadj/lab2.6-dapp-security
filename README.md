@@ -428,15 +428,11 @@ Il n'y a pas de fonctionnalité pour déconnecter le portefeuille ou réinitiali
 **Solution** : Ajouter un bouton de déconnexion et réinitialiser l'état de l'application en cas de changement de compte.
 
 #### Améliorations possibles pour sécuriser le front-end
-Validation des Entrées Utilisateur : Avant d'envoyer des paiements, validez soigneusement l'adresse et le montant pour vous assurer qu'ils sont corrects et sûrs.
+- Validation des Entrées Utilisateur : Avant d'envoyer des paiements, validez soigneusement l'adresse et le montant pour vous assurer qu'ils sont corrects et sûrs.
+- Gestion des erreurs : Utilisez un bloc try-catch pour gérer les erreurs lors de la connexion au portefeuille ou de l'envoi des paiements. Affichez des messages d'erreur clairs et appropriés à l'utilisateur.
+- Fenêtre de Confirmation pour les Transactions : Demandez à l'utilisateur de confirmer avant d'envoyer un paiement, notamment en affichant les détails de la transaction (adresse, montant, etc.).
+- Suivi de l'État du Portefeuille : Ajoutez des vérifications pour détecter les changements d'adresse ou de réseau et informez l'utilisateur si ces changements sont détectés.
+- Sécurisation de la Connexion : Implémentez une logique pour vérifier que l'utilisateur est bien connecté avec un portefeuille valide et sécurisé. Vous pouvez également envisager d'utiliser des solutions comme MetaMask pour des connexions plus sûres.
 
-Gestion des erreurs : Utilisez un bloc try-catch pour gérer les erreurs lors de la connexion au portefeuille ou de l'envoi des paiements. Affichez des messages d'erreur clairs et appropriés à l'utilisateur.
-
-Fenêtre de Confirmation pour les Transactions : Demandez à l'utilisateur de confirmer avant d'envoyer un paiement, notamment en affichant les détails de la transaction (adresse, montant, etc.).
-
-Suivi de l'État du Portefeuille : Ajoutez des vérifications pour détecter les changements d'adresse ou de réseau et informez l'utilisateur si ces changements sont détectés.
-
-Sécurisation de la Connexion : Implémentez une logique pour vérifier que l'utilisateur est bien connecté avec un portefeuille valide et sécurisé. Vous pouvez également envisager d'utiliser des solutions comme MetaMask pour des connexions plus sûres.
-
-### Conclusion
+#### Conclusion
 Cette version non sécurisée du front-end React illustre les risques et les vulnérabilités qui peuvent survenir lorsque la validation, la gestion des erreurs et la sécurité ne sont pas correctement implémentées. Il est essentiel de prendre en compte ces aspects pour garantir une application sûre et fiable, notamment lorsqu'il s'agit de manipuler des fonds numériques.
