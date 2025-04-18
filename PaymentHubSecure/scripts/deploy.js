@@ -1,7 +1,7 @@
 // scripts/deploy.js
 // npx hardhat run scripts/deploy.js --network sepolia
 
-import { ethers } from "hardhat";
+const { ethers } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -10,7 +10,7 @@ async function main() {
   console.log("Account balance:", (await deployer.provider.getBalance(deployer.address)).toString());
 
   const PaymentHubSecure = await ethers.getContractFactory("PaymentHubSecure");
-  const paymentHub = await PaymentHubSecure.deploy();
+  const paymentHub = await PaymentHubSecure.deploy(deployer.address);
 
   await paymentHub.waitForDeployment();
 
