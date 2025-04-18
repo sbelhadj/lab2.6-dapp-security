@@ -2,8 +2,8 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract PaymentHubSecure is Ownable, ReentrancyGuard, Pausable, AccessControl {
@@ -13,7 +13,7 @@ contract PaymentHubSecure is Ownable, ReentrancyGuard, Pausable, AccessControl {
 
     event PaymentSent(address indexed from, address indexed to, uint256 amount);
 
-    constructor() {
+    constructor(address initialOwner) Ownable(initialOwner) {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(OPERATOR_ROLE, msg.sender);
     }
