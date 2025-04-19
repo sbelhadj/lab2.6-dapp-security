@@ -11,7 +11,7 @@ const paymentHubABI = [
   "event PaymentSent(address indexed from, address indexed to, uint256 amount)",
 ];
 
-const contractAddress = "<Your_Contract_Address>"; // Replace with deployed contract address
+const contractAddress = "0xbd5597A160f354276bb6C7fea0c996Df92870627"; // Replace with deployed contract address
 
 // Function to get contract instance
 export const getContract = (provider) => {
@@ -46,10 +46,19 @@ export const resumeHub = async (signer) => {
   await tx.wait();
 };
 
-// Listen for PaymentSent events
-export const listenForPaymentEvents = (provider, callback) => {
+
+export const listenForPaymentEvents = async (provider, callback) => {
   const contract = getContract(provider);
-  contract.on("PaymentSent", (from, to, amount) => {
-    callback(from, to, formatEther(amount));  // ethers.js v6
-  });
+
+  // Define WebSocket provider if using Infura or other services that support WebSocket
+  const webSocketProvider = new ethers.JsonRpcProvider("wss://sepolia.infura.io/v3/584c6beeca63454f8ec72198811a7969");
+
+  //const contractWithWS = new ethers.Contract(contract.address, contract.interface, webSocketProvider);
+
+  // Listen for events
+  /*contractWithWS.on("PaymentSent", (from, to, amount) => {
+    callback(from, to, formatEther(amount));
+  });*/
+
+  console.log('WebSocket: Listening for PaymentSent events...');
 };

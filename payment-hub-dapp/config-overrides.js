@@ -1,8 +1,5 @@
 const webpack = require('webpack');
 
-
-
-
 module.exports = function override(config, env) {
   config.resolve.fallback = {
     ...config.resolve.fallback,
@@ -13,6 +10,8 @@ module.exports = function override(config, env) {
     util: require.resolve('util/'),
     url: require.resolve('url/'),
     assert: require.resolve('assert/'),
+    buffer: require.resolve("buffer/"),
+    process: require.resolve("process/browser"),
   };
 
   // Disable source map warnings
@@ -23,6 +22,7 @@ module.exports = function override(config, env) {
   config.plugins = (config.plugins || []).concat([
     new webpack.ProvidePlugin({
       process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
     }),
   ]);
 

@@ -7,7 +7,10 @@ async function main() {
   const [deployer] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
-  console.log("Account balance:", (await deployer.provider.getBalance(deployer.address)).toString());
+
+  // Convert balance from Wei to ETH
+  const balanceInEth = ethers.formatEther(await deployer.provider.getBalance(deployer.address));
+  console.log("Account balance:", balanceInEth, "ETH");
 
   const PaymentHubSecure = await ethers.getContractFactory("PaymentHubSecure");
   const paymentHub = await PaymentHubSecure.deploy(deployer.address);
