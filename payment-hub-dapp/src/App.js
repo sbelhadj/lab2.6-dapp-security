@@ -20,12 +20,37 @@ const App = () => {
     setProvider(provider);
   };
 
+  // Fonction pour gérer le change de compte Metamask
+  const handleAccountsChanged = async (accounts) => {
+    if (accounts.length > 0) {
+      const { signer, userAddress } = await connectWallet();
+      setSigner(signer);
+      setUserAddress(userAddress);
+    } else {
+      // Si aucun compte exposé , reset tout
+      setSigner(null);
+      setUserAddress('');
+      setProvider(null);
+    }
+  };
+
   useEffect(() => {
     if (signer) {
       // Set up any additional logic if needed when wallet is connected
       console.log("Wallet connected: ", userAddress);
     }
   }, [signer, userAddress]);
+
+  useEffect(() => {
+    if (provider) {
+      // Listen pour le changement de compte
+      provider.on('accountsChanged', handleAccountsChanged);
+
+      return () => {
+        provider.removeListener('accountsChanged', handleAccountsChanged);
+      };
+    }
+  }, [provider]);
 
   return (
     <div className="App">
