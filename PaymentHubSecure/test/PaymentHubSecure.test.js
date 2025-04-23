@@ -74,6 +74,9 @@ describe("PaymentHubSecure", function () {
   });
 
   it("Should not allow non-owner to withdraw contract balance", async function () {
+     // Deposit 1 ETH from addr1
+     const depositAmount = parseEther("1.0");
+    await paymentHubSecure.connect(addr1).deposit({ value: depositAmount });
     await expect(paymentHubSecure.connect(addr1).withdrawAll()).to.be.revertedWith(
       "Ownable: caller is not the owner"
     );
