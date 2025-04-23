@@ -51,14 +51,13 @@ export const listenForPaymentEvents = async (provider, callback) => {
   const contract = getContract(provider);
 
   // Define WebSocket provider if using Infura or other services that support WebSocket
-  const webSocketProvider = new ethers.JsonRpcProvider("wss://sepolia.infura.io/v3/584c6beeca63454f8ec72198811a7969");
-
-  //const contractWithWS = new ethers.Contract(contract.address, contract.interface, webSocketProvider);
+  const webSocketProvider = new ethers.WebSocketProvider("wss://sepolia.infura.io/v3/584c6beeca63454f8ec72198811a7969");
+  const contractWithWS = new ethers.Contract(contractAddress, paymentHubABI, webSocketProvider);
 
   // Listen for events
-  /*contractWithWS.on("PaymentSent", (from, to, amount) => {
+  contractWithWS.on("PaymentSent", (from, to, amount) => {
     callback(from, to, formatEther(amount));
-  });*/
+  });
 
   console.log('WebSocket: Listening for PaymentSent events...');
 };
