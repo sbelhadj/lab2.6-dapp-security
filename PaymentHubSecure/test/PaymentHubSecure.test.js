@@ -45,7 +45,7 @@ describe("PaymentHubSecure", function () {
 
     // Check the balance of addr1 in the contract
     const balance = await paymentHubSecure.balances(addr1.address);
-    expect(balance).to.equal(depositAmount.sub(withdrawAmount));
+    expect(balance).to.equal(depositAmount - withdrawAmount);
   });
 
   it("Should not allow withdrawals exceeding the balance", async function () {
