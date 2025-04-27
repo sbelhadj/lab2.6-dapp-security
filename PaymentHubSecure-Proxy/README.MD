@@ -12,8 +12,7 @@ Nous allons :
 
 ### Version adaptée du contrat
 
-```
-solidity
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
@@ -105,8 +104,7 @@ contract PaymentHubSecureUpgradeable is
 
 Installez les dépendances :
 
-```
-bash
+```bash
 npm install --save-dev hardhat @openzeppelin/hardhat-upgrades @openzeppelin/contracts-upgradeable @openzeppelin/contracts ethers
 ```
 
@@ -116,8 +114,7 @@ npm install --save-dev hardhat @openzeppelin/hardhat-upgrades @openzeppelin/cont
 
 Créer `scripts/deploy.ts` :
 
-```
-typescript
+```typescript
 import { ethers, upgrades } from "hardhat";
 
 async function main() {
@@ -142,8 +139,7 @@ main().catch((error) => {
 
 Créer `test/PaymentHubSecureUpgradeable.ts` :
 
-```
-typescript
+```typescript
 import { expect } from "chai";
 import { ethers, upgrades } from "hardhat";
 
@@ -198,8 +194,7 @@ describe("PaymentHubSecureUpgradeable", function () {
 
 Après déploiement :
 
-```
-bash
+```bash
 npx hardhat verify --network sepolia ADRESSE_IMPLEMENTATION
 ```
 
@@ -211,8 +206,7 @@ npx hardhat verify --network sepolia ADRESSE_IMPLEMENTATION
 
 ## 1. Nouveau Contrat PaymentHubSecureUpgradeableV2
 
-```
-solidity
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
@@ -229,8 +223,7 @@ contract PaymentHubSecureUpgradeableV2 is PaymentHubSecureUpgradeable {
 
 ## 2. Script d'Upgrade : upgrade.ts
 
-```
-typescript
+```typescript
 import { ethers, upgrades } from "hardhat";
 
 async function main() {
@@ -252,8 +245,7 @@ main().catch((error) => {
 
 ## 3. Test de l'Upgrade
 
-```
-typescript
+```typescript
 it("devrait upgrader vers V2 et retourner la bonne version", async function () {
     const PaymentHubV2 = await ethers.getContractFactory("PaymentHubSecureUpgradeableV2");
     const upgraded = await upgrades.upgradeProxy(await paymentHub.getAddress(), PaymentHubV2);
