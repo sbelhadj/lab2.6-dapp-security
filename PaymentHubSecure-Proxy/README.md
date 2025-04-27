@@ -105,7 +105,7 @@ contract PaymentHubSecureUpgradeable is
 Installez les dépendances :
 
 ```bash
-npm install --save-dev hardhat @openzeppelin/hardhat-upgrades @openzeppelin/contracts-upgradeable @openzeppelin/contracts ethers
+npm install --save-dev hardhat @openzeppelin/hardhat-upgrades @openzeppelin/contracts-upgradeable @openzeppelin/contracts ethers dotenv
 ```
 
 ---
